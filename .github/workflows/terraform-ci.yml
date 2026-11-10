@@ -8,30 +8,46 @@ on:
     branches:
       - main
 
+# Required permissions for GitHub Actions to request the OIDC JWT token
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   terraform-ci:
-    name: "Validate & Check Terraform"
+    name: "Validate & Plan Terraform (OIDC)"
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository code
+      # Step 1: Check out repository code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Install HashiCorp Terraform CLI
+      # Step 2: Install Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.5.0"
 
-      # Step 3: Verify code formatting
+      # Step 3: Verify syntax formatting
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
-      # Step 4: Initialize root and child modules
+      # Step 4: Assume AWS IAM Role via secretless OIDC
+      - name: Configure AWS Credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::641548802070:role/GitHubActionsTerraformRole
+          aws-region: us-east-1
+
+      # Step 5: Initialize root and child modules
       - name: Terraform Init
         run: terraform init
 
-      # Step 5: Validate configuration syntax & wiring
+      # Step 6: Validate syntax and module wiring
       - name: Terraform Validate
         run: terraform validate
+
+      # Step 7: Speculative Dry-Run Plan against Development
+      - name: Terraform Speculative Plan
+        run: terraform plan -var-file="environments/dev.tfvars"
