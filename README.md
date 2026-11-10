@@ -1,14 +1,9 @@
 ```
-# AWS Enterprise Landing Zone
-
-![AWS]([suspicious link removed])
-![Terraform]([suspicious link removed])
-![Zero Trust]([suspicious link removed])
-![License: MIT]([suspicious link removed])
+# AWS Enterprise Landing Zone (Terraform)
 
 A modular, enterprise-grade AWS Landing Zone built with **Terraform** following the **AWS Well-Architected Framework**, **Cloud Adoption Framework (CAF)** standards, and **Zero Trust** security principles.
 
-This repository serves as the AWS companion to the [azure-enterprise-landing-zone](https://github.com/kmoldenhauer/azure-enterprise-landing-zone) project, demonstrating cross-cloud Infrastructure as Code (IaC) parity, Git change management, and modular architecture.
+---
 
 ## 🏛️ Architecture Overview
 
