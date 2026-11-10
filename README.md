@@ -1,4 +1,3 @@
-```
 # AWS Enterprise Landing Zone (Terraform)
 
 A modular, enterprise-grade AWS Landing Zone built with **Terraform** following the **AWS Well-Architected Framework**, **Cloud Adoption Framework (CAF)** standards, and **Zero Trust** security principles.
